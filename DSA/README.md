@@ -2,9 +2,9 @@
 DOKS Sanctions API (later referred as DSA), is a HTTP API for finding company and private person names from official sanctions lists.
 
 Read more about DSA:
-- [Briefly in English](DSA_short_en.pdf)
-- [Briefly in Finnish](DSA_short_fi.pdf).
-- [In Finnish](DSA_fi.pdf).
+- [In English](DSA_short_en.pdf)
+- [In Finnish #1](DSA_short_fi.pdf)
+- [In Finnish #2](DSA_fi.pdf)
 
 ## Basics
 DSA is used by making API calls as HTTP requests. The host for API calls is:
