@@ -20,7 +20,7 @@ Read more about DSA:
 - [Detail types](#detail-types)
 - [Downloading target data](#downloading-target-data)
 - [Examples](#examples)
-- [Implementation strategies](#implementing-strategies)
+- [Implementation strategies](#implementation-strategies)
 - [Support](#support)
 
 ## Basics
