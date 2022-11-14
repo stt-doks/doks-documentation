@@ -6,6 +6,23 @@ Read more about DSA:
 - [In Finnish #1](DSA_short_fi.pdf)
 - [In Finnish #2](DSA_fi.pdf)
 
+## Index
+- [Basics](#basics)
+- [Authentication](#authentication)
+- [Making API calls](#making-api-calls)
+- [HTTP response](#http-response)
+- [Search by keyword](#search-by-keyword)
+- [Search parameters](#search-parameters)
+- [Sanction lists](#sanction-lists)
+- [Match score](#match-score)
+- [Internal reference](#internal-reference)
+- [API response](#api-response)
+- [Detail types](#detail-types)
+- [Downloading target data](#downloading-target-data)
+- [Examples](#examples)
+- [Implementation strategies](#implementing-strategies)
+- [Support](#support)
+
 ## Basics
 DSA is used by making API calls as HTTP requests. The host for API calls is:
 ```
@@ -50,7 +67,7 @@ curl -X POST https://dsa.doks.fi/api/current/keyword/
 
 To protect your customer data, sent payload is never saved or logged in DSA.
 
-## Responses
+## HTTP response
 Successfull API call always returns with HTTP response code:
 ```
 HTTP/2 200
@@ -103,7 +120,7 @@ Content-Type: application/json
 
 Maximum number of objects in a single API call is `100`.
 
-## Search object parameters
+## Search parameters
 Search can be fine-tuned by using parameters:
 
 ```json
@@ -156,9 +173,9 @@ DSA uses default of `75%` (0.75) for searches. This can be considered as a low b
 Read more about the match score from [here](DSA_yleiskatsaus_nimien_vertailuun.pdf) (in Finnish).
 
 ## Internal reference
-An internal reference can be placed in search object as string. Using this `ref` -parameter does not affect the search results in any way. It is passed as-is in results and can be used to help handling possible hits.
+An internal reference can be placed in search object as string. Using this `ref` -parameter does not affect the search results in any way. It is passed as-is in results and can be used to help handling possible hits when search is made with multiple search objects in a single API call. 
 
-## Hits and targets
+## API response
 DSA responses for keyword search by giving a list of hits, list of hit targets and few helpfull utilities:
 
 ```json
