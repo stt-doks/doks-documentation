@@ -1,5 +1,5 @@
 # DOKS PEP API
-DOKS PEP API (later referred as DPA), is a HTTP API for finding company and private person names from PEP lists.
+DOKS PEP API (later referred as DPA), is a HTTP API for finding private person names from PEP lists.
 
 ## Index
 - [Basics](#basics)
@@ -46,7 +46,6 @@ Content-Type: application/json
 
 [
     {
-        "entityType": "PERSON",
         "keyword": "Sauli Niinistö"
     }
 ]
@@ -56,7 +55,7 @@ Content-Type: application/json
 curl -X POST https://dpa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö"}]'
+-d '[{"keyword": "Sauli Niinistö"}]'
 ```
 
 To protect your customer data, sent payload is never saved or logged in DPA.
@@ -87,7 +86,6 @@ Content-Type: application/json
 [
     {
         "keyword": "Sauli Niinistö"
-        "entityType": "PERSON"
     }
 ]
 ```
@@ -101,13 +99,13 @@ Content-Type: application/json
 
 [
     {
-        "keyword": "Sauli Niinistö"
-        "entityType": "PERSON"
+        "keyword": "Sauli Niinistö",
+        "ref": "ABC"
     },
 
     {
-        "keyword": "Sanna Marin"
-        "entityType": "PERSON"
+        "keyword": "Sanna Marin",
+        "ref": "DEF"
     }
 ]
 ```
@@ -120,7 +118,6 @@ Search can be fine-tuned by using parameters:
 ```json
 {
     "keyword": "Sauli Niinistö",
-    "entityType": "PERSON",
     "ref": "your-internal-reference",
     "minScore": 0.9321
 }
@@ -129,17 +126,8 @@ Search can be fine-tuned by using parameters:
 | Parameter  | Type             | Mandatory | Explanation                                                                                 |
 | ---------- | ---------------- | --------- | ------------------------------------------------------------------------------------------- |
 | keyword    | string           | yes       | A keyword that is used in search.                                                           |
-| entityType | string           | yes       | Search context, `PERSON` or `ORGANIZATION`.                                                 |
 | ref        | string           | no        | Your internal reference for this search. Can be used to help handling the response.         |
 | minScore   | number           | no        | Applied matching score for search from value between `0.50` and `1.00`. Defaults to `0.75`. |
-
-## Entity types
-Every search must be made in the context of company or individual person. It also significantly reduces false-positives. There is two possible values for entity type:
-
-- `PERSON` for searching private persons
-- `ORGANIZATION` for searching companies, associations and similar.
-
-Entity type is is defined as mandatory parameter `entityType` in search object.
 
 ## Match score
 DPA searches given keywords from PEP lists with high-end name matching algorithm. The algorithm can match with multiple strategies, including phonetic similarity and transliteration spelling differences. It also takes care for example misspellings, aliases, nicknames, initials and names in different languages.
@@ -165,50 +153,32 @@ DPA responses for keyword search by giving a list of hits, list of hit targets a
     "numTargets": 2,
     "hits": [
         {
-            "id": "dpa-09c1f48d",
-            "keyword": "Sauli Niinistö",
-            "match": "Sauli NIINISTO",
-            "score": 0.99,
-            "ref": "123456"
-        },
-        {
-            "id": "dpa-eba0ffdd",
+            "id": "dpa-3afd8350",
             "keyword": "Sauli Niinistö",
             "match": "Sauli Niinistö",
             "score": 1,
             "ref": "123456"
+        },
+        {
+            "id": "dpa-ddc1f54d",
+            "keyword": "Sauli Niinistö",
+            "match": "Sauli NIINISTO",
+            "score": 0.99,
+            "ref": "123456"
         }
     ],
     "targets": {
-        "dpa-09c1f48d": {
-            "url": "https://dpa.doks.fi/api/current/download/?id=dpa-09c1f48d",
-            "details": [
-                {
-                    "nameType": "PRIMARY",
-                    "type": "NAME",
-                    "value": "Sauli NIINISTO"
-                },
-                {
-                    "type": "GENDER",
-                    "value": "UNKNOWN"
-                },
-                {
-                    "type": "CITIZENSHIP",
-                    "value": "FI"
-                },
-                {
-                    "type": "POSITIONS",
-                    "value": "Pres."
-                }
-            ]
-        },
-        "dpa-eba0ffdd": {
-            "url": "https://dpa.doks.fi/api/current/download/?id=dpa-eba0ffdd",
+        "dpa-3afd8350": {
+            "url": "https://dpa.doks.fi/api/current/download/?id=dpa-3afd8350",
             "details": [
                 {
                     "nameType": "PRIMARY",
                     "type": "NAME",
                     "value": "Sauli Niinistö"
+                },
+                {
+                    "type": "PEPTYPE",
+                    "value": "POLITICIAN"
                 },
                 {
                     "type": "BIRTHDATE",
@@ -227,16 +197,82 @@ DPA responses for keyword search by giving a list of hits, list of hit targets a
                     "value": "FI"
                 },
                 {
-                    "type": "OCCUPATIONS",
+                    "type": "OCCUPATION",
                     "value": "politician"
                 },
                 {
-                    "type": "POSITIONS",
-                    "value": "1974-01-01 - 1975-01-01  lensmann|1995-04-13 - 1996-02-01  Minister of Justice of Finland|1987-03-21 - 1999-03-23  member of the Parliament of Finland|1995-04-13 - 2001-08-30  Deputy Prime Minister of Finland|1996-02-02 - 1999-04-15  Minister of Finance|1999-04-15 - 2003-04-16  Minister of Finance|2007-03-21 - 2011-04-19  member of the Parliament of Finland|2009-01-01 - 2012-01-01  chairperson|1994-01-01 - 2001-01-01  Chairperson of the National Coalition Party|1999-03-24 - 2003-03-18  member of the Parliament of Finland|2007-04-24 - 2011-04-27  Speaker of the Parliament of Finland|Since 2012-03-01  President of Finland"
+                    "type": "POSITION",
+                    "value": "1974-01-01 - 1975-01-01  lensmann"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1995-04-13 - 1996-02-01  Minister of Justice of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1987-03-21 - 1999-03-23  member of the Parliament of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1995-04-13 - 2001-08-30  Deputy Prime Minister of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1996-02-02 - 1999-04-15  Minister of Finance"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1999-04-15 - 2003-04-16  Minister of Finance"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "2007-03-21 - 2011-04-19  member of the Parliament of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "2009-01-01 - 2012-01-01  chairperson"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1994-01-01 - 2001-01-01  Chairperson of the National Coalition Party"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "1999-03-24 - 2003-03-18  member of the Parliament of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "2007-04-24 - 2011-04-27  Speaker of the Parliament of Finland"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "Since 2012-03-01  President of Finland"
                 },
                 {
                     "type": "DESCRIPTION",
                     "value": "President of Finland since 2012"
+                }
+            ]
+        },
+        "dpa-ddc1f54d": {
+            "url": "https://dpa.doks.fi/api/current/download/?id=dpa-ddc1f54d",
+            "details": [
+                {
+                    "nameType": "PRIMARY",
+                    "type": "NAME",
+                    "value": "Sauli NIINISTO"
+                },
+                {
+                    "type": "PEPTYPE",
+                    "value": "POLITICIAN"
+                },
+                {
+                    "type": "CITIZENSHIP",
+                    "value": "FI"
+                },
+                {
+                    "type": "POSITION",
+                    "value": "Pres."
                 }
             ]
         }
@@ -278,14 +314,15 @@ DPA responses for keyword search by giving a list of hits, list of hit targets a
 ## Detail types
 DPA consolidates the data from pep lists and output's results in unified format. This is very helpfull for handling the results. Details for a single target (pep list entry) can contain following detail types:
 
-- `CITIZENSHIP`
 - `DESCRIPTION`
 - `BIRTHDATE`
 - `BIRTHPLACE`
 - `GENDER`
 - `NAME`
-- `OCCUPATIONS`
-- `POSITIONS`
+- `PEPTYPE`
+- `CITIZENSHIP`
+- `OCCUPATION`
+- `POSITION`
 
 There can be multiple entries of same detail type present in a single target. In other words, one target can have multiple names and even multiple known birthdates.
 
@@ -300,6 +337,15 @@ If the detail type is `NAME`, an additional field, `nameType` is filled for a de
 - `AKA` for an alias (Also Known As)
 - `FKA` for a formerly known name
 - `ALT` for a alternative name variation
+
+## PEP Type
+Indicates the person's political status, for example politician or member of parliament.
+
+## Occupation
+All known occupations of the person
+
+## Position
+More detailed information about the person's positions with start and end dates
 
 ## Downloading target data
 Target url can be used to fetch to fetch ready-prepared html or pdf version that includes all the details ready to be viewed on UI.
@@ -328,7 +374,7 @@ Search by a single private person name:
 curl -X POST https://dpa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö"}]'
+-d '[{"keyword": "Sauli Niinistö"}]'
 ```
 
 Search by a single company name:
@@ -336,7 +382,7 @@ Search by a single company name:
 curl -X POST https://dpa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "ORGANIZATION", "keyword": "Schenker"}]'
+-d '[{"keyword": "Schenker"}]'
 ```
 
 Search by a multiple private person names:
@@ -344,15 +390,7 @@ Search by a multiple private person names:
 curl -X POST https://dsa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö"}, {"entityType": "PERSON", "keyword": "Sanna Marin"}]'
-```
-
-Search by a multiple names, mixing entity types:
-```sh
-curl -X POST https://dsa.doks.fi/api/current/keyword/
--H 'Authorization: Bearer place-your-apikey-here'
--H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö"}, {"entityType": "ORGANIZATION", "keyword": "Schenker"}]'
+-d '[{"keyword": "Sauli Niinistö"}, {"keyword": "Sanna Marin"}]'
 ```
 
 Search with adjusted (very strict) matching requirements:
@@ -360,7 +398,7 @@ Search with adjusted (very strict) matching requirements:
 curl -X POST https://dsa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö", "minScore": 0.98}]'
+-d '[{"keyword": "Sauli Niinistö", "minScore": 0.98}]'
 ```
 
 Search by a multiple names and placing your internal reference:
@@ -368,7 +406,7 @@ Search by a multiple names and placing your internal reference:
 curl -X POST https://dsa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"entityType": "PERSON", "keyword": "Sauli Niinistö", "ref": "abc-123"}, {"entityType": "ORGANIZATION", "keyword": "Schenker", "ref": "def-456"}]'
+-d '[{"keyword": "Sauli Niinistö", "ref": "abc-123"}, {"keyword": "Schenker", "ref": "def-456"}]'
 ```
 
 ## Support
