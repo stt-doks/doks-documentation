@@ -377,14 +377,6 @@ curl -X POST https://dpa.doks.fi/api/current/keyword/
 -d '[{"keyword": "Sauli Niinistö"}]'
 ```
 
-Search by a single company name:
-```sh
-curl -X POST https://dpa.doks.fi/api/current/keyword/
--H 'Authorization: Bearer place-your-apikey-here'
--H 'Content-Type: application/json'
--d '[{"keyword": "Schenker"}]'
-```
-
 Search by a multiple private person names:
 ```sh
 curl -X POST https://dsa.doks.fi/api/current/keyword/
@@ -406,7 +398,7 @@ Search by a multiple names and placing your internal reference:
 curl -X POST https://dsa.doks.fi/api/current/keyword/
 -H 'Authorization: Bearer place-your-apikey-here'
 -H 'Content-Type: application/json'
--d '[{"keyword": "Sauli Niinistö", "ref": "abc-123"}, {"keyword": "Schenker", "ref": "def-456"}]'
+-d '[{"keyword": "Sauli Niinistö", "ref": "abc-123"}, {"keyword": "Sanna Marin", "ref": "def-456"}]'
 ```
 
 ## Support
