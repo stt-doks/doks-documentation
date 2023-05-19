@@ -152,14 +152,15 @@ Entity type is is defined as mandatory parameter `entityType` in search object.
 ## Sanction lists
 DSA includes data from multiple sanctions lists. As default, the search covers all these lists. It is possible to adjust this, by entering wanted lists (sources) in search object as array. If the `source` -parameter is not set or it is empty, the search is made with all available sources.
 
-| Target        | Explanation                                                                                    |
-| ------------- | ---------------------------------------------------------------------------------------------- |
-| `OFACSDN`     | Office of Foreign Asset Control (OFAC) Specially Designated Nationals and Blocked Persons list |
-| `OFACCONS`    | Office of Foreign Asset Control (OFAC) Consolidated Sanctions List (Non-SDN)                   |
-| `KRP`         | Asset freeze decisions made by the Finnish National Bureau of Investigation                    |
-| `EUFINANCIAL` | Consolidated list of persons, groups and entities subject to EU financial sanctions            |
-| `UN`          | UN Security Council's sanctions list                                                           |
-| `UKCONS`      | Office of Financial Sanctions Implementation (OFSI) HM Treasury Consolidated List              |
+| Target        | Explanation                                                                                        |
+| ------------- | -------------------------------------------------------------------------------------------------- |
+| `OFACSDN`     | Office of Foreign Asset Control (OFAC) Specially Designated Nationals and Blocked Persons list     |
+| `OFACCONS`    | Office of Foreign Asset Control (OFAC) Consolidated Sanctions List (Non-SDN)                       |
+| `KRP`         | Asset freeze decisions made by the Finnish National Bureau of Investigation                        |
+| `EUFINANCIAL` | Consolidated list of persons, groups and entities subject to EU financial sanctions                |
+| `UN`          | UN Security Council's sanctions list                                                               |
+| `UKCONS`      | Office of Financial Sanctions Implementation (OFSI) HM Treasury Consolidated List                  |
+| `BIS`         | International Trade Administration (ITA) / Bureau of Industry and Security (BIS) consolidated list |
 
 ## Match score
 DSA searches given keywords from sanctions lists with high-end name matching algorithm. The algorithm can match with multiple strategies, including phonetic similarity and transliteration spelling differences. It also takes care for example misspellings, aliases, nicknames, initials and names in different languages.
