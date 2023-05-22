@@ -14,7 +14,6 @@ DOKS PEP API (later referred as DPA), is a HTTP API for finding private person n
 - [Detail types](#detail-types)
 - [Downloading target data](#downloading-target-data)
 - [Examples](#examples)
-- [Implementation strategies](#implementation-strategies)
 - [Support](#support)
 
 ## Basics
@@ -338,14 +337,14 @@ If the detail type is `NAME`, an additional field, `nameType` is filled for a de
 - `FKA` for a formerly known name
 - `ALT` for a alternative name variation
 
-## PEP Type
+### PEP type
 Indicates the person's political status, for example politician or member of parliament.
 
-## Occupation
-All known occupations of the person
+### Occupation
+Occupation of the person
 
-## Position
-More detailed information about the person's positions with start and end dates
+### Position
+More detailed information about the person's position
 
 ## Downloading target data
 Target url can be used to fetch to fetch ready-prepared html or pdf version that includes all the details ready to be viewed on UI.
