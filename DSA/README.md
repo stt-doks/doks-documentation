@@ -159,6 +159,7 @@ DSA includes data from multiple sanctions lists. As default, the search covers a
 | `KRP`         | Asset freeze decisions made by the Finnish National Bureau of Investigation                        |
 | `EUFINANCIAL` | Consolidated list of persons, groups and entities subject to EU financial sanctions                |
 | `UN`          | UN Security Council's sanctions list                                                               |
+| `UK`          | Office of Financial Sanctions Implementation (OFSI) HM Treasury The UK Sanctions List              |
 | `UKCONS`      | Office of Financial Sanctions Implementation (OFSI) HM Treasury Consolidated List                  |
 | `BIS`         | International Trade Administration (ITA) / Bureau of Industry and Security (BIS) consolidated list |
 
