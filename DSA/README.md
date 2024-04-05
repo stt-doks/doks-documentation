@@ -162,6 +162,7 @@ DSA includes data from multiple sanctions lists. As default, the search covers a
 | `UK`          | Office of Financial Sanctions Implementation (OFSI) HM Treasury The UK Sanctions List              |
 | `UKCONS`      | Office of Financial Sanctions Implementation (OFSI) HM Treasury Consolidated List                  |
 | `BIS`         | International Trade Administration (ITA) / Bureau of Industry and Security (BIS) consolidated list |
+| `EUEXTENDED`  | EU sanctions related to certain sectors or events.                                                 |
 
 ## Match score
 DSA searches given keywords from sanctions lists with high-end name matching algorithm. The algorithm can match with multiple strategies, including phonetic similarity and transliteration spelling differences. It also takes care for example misspellings, aliases, nicknames, initials and names in different languages.
